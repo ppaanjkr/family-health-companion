@@ -26,18 +26,39 @@ function NavigationIcon({ name }: { name: IconName }) {
   };
 
   if (name === "home") {
-    return <svg {...commonProps}><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z" /><path d="M9 21v-6h6v6" /></svg>;
+    return (
+      <svg {...commonProps}>
+        <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z" />
+        <path d="M9 21v-6h6v6" />
+      </svg>
+    );
   }
 
   if (name === "calendar") {
-    return <svg {...commonProps}><rect height="17" rx="2" width="18" x="3" y="4" /><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" /></svg>;
+    return (
+      <svg {...commonProps}>
+        <rect height="17" rx="2" width="18" x="3" y="4" />
+        <path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+      </svg>
+    );
   }
 
   if (name === "users") {
-    return <svg {...commonProps}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>;
+    return (
+      <svg {...commonProps}>
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    );
   }
 
-  return <svg {...commonProps}><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>;
+  return (
+    <svg {...commonProps}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 8 0 0 1 16 0" />
+    </svg>
+  );
 }
 
 export function BottomNavigation() {
@@ -47,7 +68,7 @@ export function BottomNavigation() {
     <nav className="fixed inset-x-0 bottom-0 z-10 border-t border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto grid w-full max-w-lg grid-cols-4 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2">
         {navigationItems.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive = isRouteActive(pathname, item.href);
 
           return (
             <Link
@@ -56,7 +77,9 @@ export function BottomNavigation() {
               href={item.href}
               key={item.href}
             >
-              <span className="h-5 w-5"><NavigationIcon name={item.icon} /></span>
+              <span className="h-5 w-5">
+                <NavigationIcon name={item.icon} />
+              </span>
               {item.label}
             </Link>
           );
@@ -64,4 +87,12 @@ export function BottomNavigation() {
       </div>
     </nav>
   );
+}
+
+function isRouteActive(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
 }

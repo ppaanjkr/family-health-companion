@@ -7,6 +7,8 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase/config";
@@ -17,7 +19,9 @@ import { serverTimestamp } from "firebase/firestore";
 const COLLECTION = "health_profiles";
 
 export async function getProfiles(): Promise<HealthProfile[]> {
-  const snapshot = await getDocs(collection(db, COLLECTION));
+  const q = query(collection(db, COLLECTION), orderBy("createdAt", "desc"));
+
+  const snapshot = await getDocs(q);
 
   return snapshot.docs.map((d) => ({
     id: d.id,
@@ -25,9 +29,7 @@ export async function getProfiles(): Promise<HealthProfile[]> {
   }));
 }
 
-export async function getProfile(
-  id: string
-): Promise<HealthProfile | null> {
+export async function getProfile(id: string): Promise<HealthProfile | null> {
   const snapshot = await getDoc(doc(db, COLLECTION, id));
 
   if (!snapshot.exists()) {
@@ -41,9 +43,9 @@ export async function getProfile(
 }
 
 export async function createProfile(
-  data: Omit<HealthProfile, "id" | "createdAt" | "updatedAt">
+  data: Omit<HealthProfile, "id" | "createdAt" | "updatedAt">,
 ) {
-  return await addDoc(collection(db, COLLECTION), {
+  return addDoc(collection(db, COLLECTION), {
     ...data,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
@@ -52,7 +54,7 @@ export async function createProfile(
 
 export async function updateProfile(
   id: string,
-  data: Partial<HealthProfile>
+  data: Partial<Omit<HealthProfile, "id" | "createdAt" | "updatedAt">>,
 ) {
   await updateDoc(doc(db, COLLECTION, id), {
     ...data,
@@ -62,4 +64,12 @@ export async function updateProfile(
 
 export async function deleteProfile(id: string) {
   await deleteDoc(doc(db, COLLECTION, id));
+}
+
+export async function getPersonProfiles(): Promise<HealthProfile[]> {
+  const profiles = await getProfiles();
+
+  return profiles.filter(
+    (profile) => profile.type === "person" && profile.active,
+  );
 }
