@@ -23,16 +23,12 @@ type Props = {
   initialMembers: ExpenseMember[];
 };
 
-export default function ExpenseMemberClient({
-  initialMembers,
-}: Props) {
+export default function ExpenseMemberClient({ initialMembers }: Props) {
   const router = useRouter();
 
   const [isPending, startTransition] = useTransition();
 
   const [isAdding, setIsAdding] = useState(false);
-
-  const [editingId, setEditingId] = useState<string | null>(null);
 
   async function handleCreate(values: ExpenseMemberFormValues) {
     await createExpenseMember({
@@ -49,43 +45,10 @@ export default function ExpenseMemberClient({
     });
   }
 
-  async function handleUpdate(
-    id: string,
-    values: ExpenseMemberFormValues
-  ) {
-    await updateExpenseMember(id, {
-      name: values.name,
-      bank: values.bank,
-      bankAccount: values.bankAccount,
-      active: values.active === "true",
-    });
-
-    setEditingId(null);
-
-    startTransition(() => {
-      router.refresh();
-    });
-  }
-
-  async function handleDelete(id: string) {
-    if (!confirm("ลบสมาชิกนี้ใช่หรือไม่")) {
-      return;
-    }
-
-    await deleteExpenseMember(id);
-
-    startTransition(() => {
-      router.refresh();
-    });
-  }
-
   return (
     <div className="space-y-5">
       {!isAdding && (
-        <Button
-          className="w-full"
-          onClick={() => setIsAdding(true)}
-        >
+        <Button className="w-full" onClick={() => setIsAdding(true)}>
           เพิ่มสมาชิก
         </Button>
       )}
@@ -100,23 +63,11 @@ export default function ExpenseMemberClient({
       )}
 
       {initialMembers.length === 0 ? (
-        <p className="text-center text-sm text-slate-500">
-          
-        </p>
+        <p className="text-center text-sm text-slate-500"></p>
       ) : (
         <div className="space-y-4">
           {initialMembers.map((member) => (
-            <ExpenseMemberCard
-              key={member.id}
-              member={member}
-              editing={editingId === member.id}
-              onEdit={() => setEditingId(member.id)}
-              onCancel={() => setEditingId(null)}
-              onDelete={() => handleDelete(member.id)}
-              onSave={(values) =>
-                handleUpdate(member.id, values)
-              }
-            />
+            <ExpenseMemberCard key={member.id} member={member} />
           ))}
         </div>
       )}

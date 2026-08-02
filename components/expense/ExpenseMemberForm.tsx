@@ -24,6 +24,7 @@ type ExpenseMemberFormProps = {
   submitText?: string;
   loading?: boolean;
   onSubmit: (values: ExpenseMemberFormValues) => Promise<void>;
+  onCancel?: () => void;
 };
 
 export default function ExpenseMemberForm({
@@ -31,6 +32,7 @@ export default function ExpenseMemberForm({
   submitText = "บันทึก",
   loading = false,
   onSubmit,
+  onCancel,
 }: ExpenseMemberFormProps) {
   const form = useForm<ExpenseMemberFormValues>({
     defaultValues: {
@@ -53,10 +55,7 @@ export default function ExpenseMemberForm({
   }, [initialData, form]);
 
   return (
-    <form
-      className="space-y-4"
-      onSubmit={form.handleSubmit(onSubmit)}
-    >
+    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
       <FormInput
         form={form}
         name="name"
@@ -95,13 +94,15 @@ export default function ExpenseMemberForm({
         ]}
       />
 
-      <Button
-        type="submit"
-        className="w-full"
-        disabled={loading}
-      >
-        {submitText}
-      </Button>
+      <div className="mt-6 flex gap-3">
+        <Button type="button" outline onClick={onCancel}>
+          ยกเลิก
+        </Button>
+
+        <Button type="submit" loading={loading}>
+          {submitText}
+        </Button>
+      </div>
     </form>
   );
 }
