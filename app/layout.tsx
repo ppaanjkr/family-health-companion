@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Kanit } from "next/font/google";
 
 import { AuthProvider } from "@/providers/AuthProvider";
@@ -16,6 +16,11 @@ const kanit = Kanit({
 export const metadata: Metadata = {
   title: "4Ducks",
   description: "duckduckduckduck",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f4f8fc",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
