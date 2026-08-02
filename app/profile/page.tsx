@@ -42,7 +42,9 @@ export default async function ProfilePage() {
             className="flex items-center justify-between px-5 py-4 transition hover:bg-slate-50"
           >
             <div>
-              <div className="font-medium text-slate-900">รายการสมาชิกข้อมูลสุขภาพ</div>
+              <div className="font-medium text-slate-900">
+                รายการสมาชิกข้อมูลสุขภาพ
+              </div>
             </div>
 
             <ChevronRight size={20} className="text-slate-400" />
@@ -52,11 +54,27 @@ export default async function ProfilePage() {
             className="flex items-center justify-between px-5 py-4 transition hover:bg-slate-50 border-t border-slate-100"
           >
             <div>
-              <div className="font-medium text-slate-900">รายการสมาชิกหารค่าใช้จ่าย</div>
+              <div className="font-medium text-slate-900">
+                รายการสมาชิกหารค่าใช้จ่าย
+              </div>
             </div>
 
             <ChevronRight size={20} className="text-slate-400" />
           </Link>
+          {user?.role === "owner" && (
+            <Link
+              href={ROUTES.PERMISSION}
+              className="flex items-center justify-between border-t border-slate-100 px-5 py-4 transition hover:bg-slate-50"
+            >
+              <div>
+                <div className="font-medium text-slate-900">
+                  สิทธิ์การใช้งาน
+                </div>
+              </div>
+
+              <ChevronRight size={20} className="text-slate-400" />
+            </Link>
+          )}
         </Card>
       </section>
 

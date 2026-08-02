@@ -18,4 +18,6 @@ export const ROUTES = {
   EXPENSE_HISTORY: "/expense/history",
   EXPENSE_HISTORY_DETAIL: (id: string) =>
   `/expense/history/${id}`,
+
+  PERMISSION: "/permission",
 } as const;

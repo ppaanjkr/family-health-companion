@@ -23,10 +23,18 @@ export async function getProfiles(): Promise<HealthProfile[]> {
 
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((d) => ({
-    id: d.id,
-    ...(d.data() as Omit<HealthProfile, "id">),
-  }));
+  return snapshot.docs.map((d) => {
+    const data = d.data();
+
+    return {
+      id: d.id,
+      ...data,
+
+      createdAt: data.createdAt ? data.createdAt.toMillis() : null,
+
+      updatedAt: data.updatedAt ? data.updatedAt.toMillis() : null,
+    } as HealthProfile;
+  });
 }
 
 export async function getProfile(id: string): Promise<HealthProfile | null> {
@@ -36,10 +44,16 @@ export async function getProfile(id: string): Promise<HealthProfile | null> {
     return null;
   }
 
+  const data = snapshot.data();
+
   return {
     id: snapshot.id,
-    ...(snapshot.data() as Omit<HealthProfile, "id">),
-  };
+    ...data,
+
+    createdAt: data.createdAt ? data.createdAt.toMillis() : null,
+
+    updatedAt: data.updatedAt ? data.updatedAt.toMillis() : null,
+  } as HealthProfile;
 }
 
 export async function createProfile(

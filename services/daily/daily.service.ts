@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   updateDoc,
   where,
+  orderBy
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase/config";
@@ -104,4 +105,37 @@ export async function updateDailyRecord(
  */
 export async function deleteDailyRecord(id: string) {
   await deleteDoc(doc(db, COLLECTION, id));
+}
+
+/**
+ * ดึงประวัติทั้งหมดของสมาชิก
+ */
+export async function getDailyRecordsByProfile(
+  profileId: string,
+): Promise<DailyRecord[]> {
+  const q = query(
+    collection(db, COLLECTION),
+    where(
+      "profileId",
+      "==",
+      profileId,
+    ),
+    orderBy(
+      "recordDate",
+      "asc",
+    ),
+  );
+
+  const snapshot =
+    await getDocs(q);
+
+  return snapshot.docs.map(
+    (docSnap) => ({
+      id: docSnap.id,
+      ...(docSnap.data() as Omit<
+        DailyRecord,
+        "id"
+      >),
+    }),
+  );
 }

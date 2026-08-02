@@ -11,8 +11,16 @@ import { formatThaiDate, getRecordDate } from "@/lib/utils/date";
 import { getDailyRecordsByDate } from "@/services/daily/daily.service";
 import { getPersonProfiles } from "@/services/profile/profile.service";
 
-export default async function DailyPage() {
-  const selectedDate = new Date();
+type Props = {
+  searchParams: Promise<{
+    date?: string;
+  }>;
+};
+
+export default async function DailyPage({ searchParams }: Props) {
+  const { date } = await searchParams;
+
+  const selectedDate = date ? new Date(date) : new Date();
 
   const recordDate = getRecordDate(selectedDate);
 
@@ -23,9 +31,7 @@ export default async function DailyPage() {
 
   return (
     <AppShell>
-      <PageHeader
-        title="บันทึกประจำวัน"
-      />
+      <PageHeader title="บันทึกประจำวัน" />
 
       <div className="mt-6">
         <DailyDateNavigator selectedDate={selectedDate} />

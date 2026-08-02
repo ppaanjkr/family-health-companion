@@ -8,6 +8,7 @@ import HealthProfileForm, {
 import { createHealthProfile } from "@/lib/firebase/health-profile";
 import { CreateHealthProfile } from "@/types/profile";
 import { AppShell } from "@/components/layout/AppShell";
+import { PageHeader } from "@/components/ui";
 
 export default function CreateFamilyPage() {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function CreateFamilyPage() {
 
   return (
     <AppShell>
+      <PageHeader title="เพิ่มข้อมูลสมาชิก" backButton />
       <HealthProfileForm onSubmit={handleSubmit} />
     </AppShell>
   );

@@ -7,5 +7,5 @@ export const USER_ROLE = {
 export const USER_STATUS = {
   ACTIVE: "active",
   PENDING: "pending",
-  REJECTED: "rejected",
+  INACTIVE: "inactive",
 } as const;

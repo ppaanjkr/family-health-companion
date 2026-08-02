@@ -31,7 +31,7 @@ export default async function FamilyDetailPage({
     <AppShell>
       <PageHeader
         title="ข้อมูลสมาชิก"
-        description="รายละเอียดข้อมูลสมาชิกในครอบครัว"
+        backButton
       />
 
       <div className="space-y-6">
