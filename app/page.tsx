@@ -15,6 +15,8 @@ import {
 import HealthMemberSelector from "@/components/dashboard/HealthMemberSelector";
 import HealthDashboard from "@/components/dashboard/HealthDashboard";
 import { DailyRecord } from "@/types/daily";
+import { USER_STATUS } from "@/constants/auth";
+import Link from "next/link";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -36,6 +38,28 @@ export default async function Home({ searchParams }: HomeProps) {
   const session = await auth();
   const lineUserId = session?.user?.lineUserId;
   const user = lineUserId ? await getUserByLineUserId(lineUserId) : null;
+  const isActive = user?.status === USER_STATUS.ACTIVE;
+  if (!isActive) {
+    return (
+      <AppShell>
+        <div className="flex min-h-[70vh] flex-col items-center justify-center gap-6">
+          <h1 className="text-3xl font-bold">4Ducks</h1>
+
+          <p className="text-center text-slate-500">
+            รอป่านปรับแล้วค่อยเข้าสู่ระบบใหม่อีกครั้ง
+          </p>
+
+          <Link
+            href="/login"
+            className="rounded-2xl bg-sky-500 px-8 py-3 font-semibold text-white"
+          >
+            เข้าสู่ระบบด้วย LINE
+          </Link>
+        </div>
+      </AppShell>
+    );
+  }
+
   const displayName = user?.displayName ?? session?.user?.name ?? "คุณ";
   const currentDate = new Intl.DateTimeFormat("th-TH", {
     dateStyle: "full",
