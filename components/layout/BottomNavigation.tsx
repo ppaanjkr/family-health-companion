@@ -9,7 +9,7 @@ import { ROUTES } from "@/constants/routes";
 const navigationItems = [
   { href: ROUTES.DASHBOARD, label: "หน้าหลัก", icon: "home" },
   { href: ROUTES.DAILY, label: "บันทึก", icon: "calendar" },
-  { href: ROUTES.FAMILY, label: "ครอบครัว", icon: "users" },
+  { href: ROUTES.EXPENSES, label: "ค่าใช้จ่าย", icon: "expense" },
   { href: ROUTES.PROFILE, label: "โปรไฟล์", icon: "user" },
 ] as const;
 
@@ -43,12 +43,12 @@ function NavigationIcon({ name }: { name: IconName }) {
     );
   }
 
-  if (name === "users") {
+  if (name === "expense") {
     return (
       <svg {...commonProps}>
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        <path d="M3 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+        <path d="M16 12h3" />
+        <circle cx="15.5" cy="12" r="0.5" fill="currentColor" stroke="none" />
       </svg>
     );
   }

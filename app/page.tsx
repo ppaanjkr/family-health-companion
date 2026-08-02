@@ -29,7 +29,7 @@ export default async function Home() {
       <PageHeader
         title={`${getGreeting()} ${displayName}`}
         description={currentDate}
-        action={
+        rightAction={
           <Avatar imageUrl={user?.pictureUrl} name={displayName} size="md" />
         }
       />

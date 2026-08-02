@@ -3,7 +3,10 @@ import { auth, signOut } from "@/auth";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, PageHeader } from "@/components/ui";
 import { Avatar } from "@/components/ui/Avatar";
+import { ROUTES } from "@/constants/routes";
 import { getUserByLineUserId } from "@/services/user/user.service";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -13,7 +16,7 @@ export default async function ProfilePage() {
 
   return (
     <AppShell>
-      <PageHeader title="โปรไฟล์" description="ข้อมูลบัญชีของคุณ" />
+      <PageHeader title="โปรไฟล์" />
 
       <Card className="mt-7 flex items-center gap-4 p-5 ring-1 ring-slate-100">
         <Avatar imageUrl={user?.pictureUrl} name={displayName} size="lg" />
@@ -28,6 +31,34 @@ export default async function ProfilePage() {
           </span>
         </div>
       </Card>
+
+      <section className="mt-8">
+        <h2 className="px-1 text-xs font-semibold tracking-wider text-slate-500">
+          เมนู
+        </h2>
+        <Card className="mt-3 overflow-hidden ring-1 ring-slate-100">
+          <Link
+            href={ROUTES.FAMILY}
+            className="flex items-center justify-between px-5 py-4 transition hover:bg-slate-50"
+          >
+            <div>
+              <div className="font-medium text-slate-900">รายการสมาชิกข้อมูลสุขภาพ</div>
+            </div>
+
+            <ChevronRight size={20} className="text-slate-400" />
+          </Link>
+          <Link
+            href={ROUTES.EXPENSE_MEMBERS}
+            className="flex items-center justify-between px-5 py-4 transition hover:bg-slate-50 border-t border-slate-100"
+          >
+            <div>
+              <div className="font-medium text-slate-900">รายการสมาชิกหารค่าใช้จ่าย</div>
+            </div>
+
+            <ChevronRight size={20} className="text-slate-400" />
+          </Link>
+        </Card>
+      </section>
 
       <section className="mt-8">
         <h2 className="px-1 text-xs font-semibold tracking-wider text-slate-500">

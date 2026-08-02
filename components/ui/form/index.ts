@@ -7,3 +7,4 @@ export { default as FormTextarea } from "./FormTextarea";
 export { default as FormSection } from "./FormSection";
 export { default as FormInputNumber } from "./FormInputNumber";
 export { default as FormChipGroup } from "./FormChipGroup";
+export { default as ChipSelector } from "./ChipSelector";

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
+
 import { AuthProvider } from "@/providers/AuthProvider";
+import ToastProvider from "@/components/ui/toast/ToastProvider";
+
 import "./globals.css";
 
 const kanit = Kanit({
@@ -21,9 +24,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${kanit.variable} h-full antialiased`}>
+    <html
+      lang="th"
+      className={`${kanit.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </AuthProvider>
       </body>
     </html>
   );

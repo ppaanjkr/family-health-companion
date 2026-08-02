@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  FieldValues,
-  Path,
-  UseFormReturn,
-} from "react-hook-form";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 import FormField from "./FormField";
 
@@ -19,12 +15,7 @@ interface FormInputProps<T extends FieldValues> {
 
   placeholder?: string;
 
-  type?:
-    | "text"
-    | "email"
-    | "password"
-    | "number"
-    | "tel";
+  type?: "text" | "email" | "password" | "number" | "tel";
 
   disabled?: boolean;
 
@@ -41,9 +32,7 @@ export default function FormInput<T extends FieldValues>({
   disabled = false,
   className = "",
 }: FormInputProps<T>) {
-  const error = form.formState.errors[name]?.message as
-    | string
-    | undefined;
+  const error = form.formState.errors[name]?.message as string | undefined;
 
   return (
     <FormField
@@ -56,7 +45,9 @@ export default function FormInput<T extends FieldValues>({
         type={type}
         placeholder={placeholder}
         disabled={disabled}
-        {...form.register(name)}
+        {...form.register(name, {
+          required: required ? `กรุณาเลือก${label}` : false,
+        })}
         className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-sky-500 disabled:bg-slate-100"
       />
     </FormField>

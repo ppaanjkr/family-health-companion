@@ -11,6 +11,8 @@ import { getProfiles } from "@/services/profile/profile.service";
 import { HealthProfile } from "@/types/profile";
 import { Button, Card, PageHeader } from "@/components/ui";
 import { Heart, Plus } from "lucide-react";
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 
 export default function FamilyPage() {
   const router = useRouter();
@@ -38,17 +40,17 @@ export default function FamilyPage() {
   return (
     <AppShell>
       <PageHeader
-        title="ครอบครัว"
-        description="คนที่คุณดูแลและใส่ใจ"
-        action={
-          <Button
-            leftIcon={<Plus size={18} />}
-            onClick={() => router.push("/family/create")}
-          >
-            เพิ่ม
-          </Button>
-        }
+        title="สมาชิกข้อมูลสุขภาพ"
+        backButton
       />
+
+      <div className="mt-6">
+        <Link href={ROUTES.FAMILY_NEW}>
+          <Button className="w-full">
+            เพิ่มสมาชิก
+          </Button>
+        </Link>
+      </div>
 
       {loading ? (
         <Card className="mt-8 p-8 text-center ring-1 ring-slate-100">

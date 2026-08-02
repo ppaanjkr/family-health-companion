@@ -59,6 +59,8 @@ export default function FormInputNumber<T extends FieldValues>({
           placeholder={placeholder}
           disabled={disabled}
           {...form.register(name, {
+            required: required ? `กรุณากรอก${label}` : false,
+
             setValueAs: (value) => (value === "" ? undefined : Number(value)),
           })}
           className={`w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-sky-500 disabled:bg-slate-100 ${

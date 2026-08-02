@@ -25,7 +25,6 @@ export default async function DailyPage() {
     <AppShell>
       <PageHeader
         title="บันทึกประจำวัน"
-        description="บันทึกข้อมูลสุขภาพของสมาชิกในแต่ละวัน"
       />
 
       <div className="mt-6">

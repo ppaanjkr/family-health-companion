@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  FieldValues,
-  Path,
-  UseFormReturn,
-} from "react-hook-form";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 import FormField from "./FormField";
 import { FormOption } from "./types";
@@ -32,9 +28,7 @@ export default function FormRadioGroup<T extends FieldValues>({
   disabled = false,
   className = "",
 }: FormRadioGroupProps<T>) {
-  const error = form.formState.errors[name]?.message as
-    | string
-    | undefined;
+  const error = form.formState.errors[name]?.message as string | undefined;
 
   const selected = form.watch(name);
 
@@ -63,15 +57,13 @@ export default function FormRadioGroup<T extends FieldValues>({
                   type="radio"
                   value={option.value}
                   disabled={disabled}
-                  {...form.register(name)}
+                  {...form.register(name, {
+                    required: required ? `กรุณาเลือก${label}` : false,
+                  })}
                   className="sr-only"
                 />
 
-                {option.icon && (
-                  <div className="text-3xl">
-                    {option.icon}
-                  </div>
-                )}
+                {option.icon && <div className="text-3xl">{option.icon}</div>}
 
                 <div className={`font-medium ${option.icon && "mt-2"}`}>
                   {option.label}
