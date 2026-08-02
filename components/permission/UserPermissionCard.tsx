@@ -1,11 +1,14 @@
 "use client";
 
 import { Card, Button, Switch } from "@/components/ui";
+import { Avatar } from "@/components/ui/Avatar";
 
-import { USER_ROLE, USER_STATUS } from "@/constants/auth";
+import {
+  USER_ROLE,
+  USER_STATUS,
+} from "@/constants/auth";
 
 import type { User } from "@/types/auth";
-import { Avatar } from "../ui/Avatar";
 
 type UserPermissionCardProps = {
   user: User;
@@ -14,7 +17,10 @@ type UserPermissionCardProps = {
 
   onApprove?: (user: User) => void;
 
-  onToggle?: (user: User, active: boolean) => void;
+  onToggle?: (
+    user: User,
+    active: boolean,
+  ) => void;
 };
 
 export default function UserPermissionCard({
@@ -23,30 +29,29 @@ export default function UserPermissionCard({
   onApprove,
   onToggle,
 }: UserPermissionCardProps) {
-  const isOwner = user.role === USER_ROLE.OWNER;
+  const isOwner =
+    user.role === USER_ROLE.OWNER;
 
-  const isPending = user.status === USER_STATUS.PENDING;
+  const isPending =
+    user.status === USER_STATUS.PENDING;
 
-  const isActive = user.status === USER_STATUS.ACTIVE;
+  const isActive =
+    user.status === USER_STATUS.ACTIVE;
 
   return (
     <Card className="p-4">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          {user.pictureUrl ? (
-            <Avatar
-              imageUrl={user.pictureUrl}
-              name={user.displayName}
-              size="sm"
-            />
-          ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 font-semibold text-slate-500">
-              {user.displayName.charAt(0).toUpperCase()}
-            </div>
-          )}
+          <Avatar
+            imageUrl={user.pictureUrl}
+            name={user.displayName}
+            size="sm"
+          />
 
           <div>
-            <h3 className="font-semibold text-slate-900">{user.displayName}</h3>
+            <h3 className="font-semibold">
+              {user.displayName}
+            </h3>
 
             <p
               className={`mt-1 text-sm ${
@@ -57,7 +62,11 @@ export default function UserPermissionCard({
                     : "text-red-600"
               }`}
             >
-              {isPending ? "รอการอนุมัติ" : isActive ? "ใช้งาน" : "ปิดใช้งาน"}
+              {isPending
+                ? "รอการอนุมัติ"
+                : isActive
+                  ? "ใช้งาน"
+                  : "ปิดใช้งาน"}
             </p>
           </div>
         </div>
@@ -67,14 +76,20 @@ export default function UserPermissionCard({
             Owner
           </span>
         ) : isPending ? (
-          <Button size="sm" loading={loading} onClick={() => onApprove?.(user)}>
+          <Button
+            size="sm"
+            loading={loading}
+            onClick={() => onApprove?.(user)}
+          >
             อนุมัติ
           </Button>
         ) : (
           <Switch
             checked={isActive}
             disabled={loading}
-            onCheckedChange={(checked) => onToggle?.(user, checked)}
+            onCheckedChange={(checked) =>
+              onToggle?.(user, checked)
+            }
           />
         )}
       </div>

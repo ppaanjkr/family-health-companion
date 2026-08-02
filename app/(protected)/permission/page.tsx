@@ -3,17 +3,13 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
 import { AppShell } from "@/components/layout/AppShell";
-import UserPermissionCard from "@/components/permission/UserPermissionCard";
+
 import { PageHeader } from "@/components/ui";
 
-import {
-  USER_ROLE,
-} from "@/constants/auth";
+import { USER_ROLE } from "@/constants/auth";
 
-import {
-  getUserByLineUserId,
-  getUsers,
-} from "@/services/user/user.service";
+import { getUserByLineUserId, getUsers } from "@/services/user/user.service";
+import PermissionClient from "@/components/permission/PermissionClient";
 
 export default async function PermissionPage() {
   const session = await auth();
@@ -22,15 +18,9 @@ export default async function PermissionPage() {
     redirect("/login");
   }
 
-  const currentUser =
-    await getUserByLineUserId(
-      session.user.lineUserId,
-    );
+  const currentUser = await getUserByLineUserId(session.user.lineUserId);
 
-  if (
-    !currentUser ||
-    currentUser.role !== USER_ROLE.OWNER
-  ) {
+  if (!currentUser || currentUser.role !== USER_ROLE.OWNER) {
     redirect("/");
   }
 
@@ -38,25 +28,15 @@ export default async function PermissionPage() {
 
   return (
     <AppShell>
-      <PageHeader
-        title="สิทธิ์การใช้งาน"
-        backButton
-      />
+      <PageHeader title="สิทธิ์การใช้งาน" backButton />
 
-      <div className="mt-6 space-y-3">
-        {users.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-300 py-12 text-center text-slate-500">
-            ยังไม่มีผู้ใช้งาน
-          </div>
-        ) : (
-          users.map((user) => (
-            <UserPermissionCard
-              key={user.id}
-              user={user}
-            />
-          ))
-        )}
-      </div>
+      {users.length === 0 ? (
+        <div className="mt-6 rounded-2xl border border-dashed border-slate-300 py-12 text-center text-slate-500">
+          ยังไม่มีผู้ใช้งาน
+        </div>
+      ) : (
+        <PermissionClient users={users} />
+      )}
     </AppShell>
   );
 }
