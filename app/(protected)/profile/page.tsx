@@ -3,6 +3,7 @@ import { auth, signOut } from "@/auth";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card, PageHeader } from "@/components/ui";
 import { Avatar } from "@/components/ui/Avatar";
+import { USER_ROLE } from "@/constants/auth";
 import { ROUTES } from "@/constants/routes";
 import { getUserByLineUserId } from "@/services/user/user.service";
 import { ChevronRight } from "lucide-react";
@@ -27,7 +28,7 @@ export default async function ProfilePage() {
             เชื่อมต่อกับ LINE
           </p>
           <span className="mt-3 inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
-            เจ้าของครอบครัว
+            {user?.role === USER_ROLE.OWNER ? "ตัวมัม" : "ลูกกะจ๊อก"}
           </span>
         </div>
       </Card>
@@ -61,7 +62,7 @@ export default async function ProfilePage() {
 
             <ChevronRight size={20} className="text-slate-400" />
           </Link>
-          {user?.role === "owner" && (
+          {user?.role === USER_ROLE.OWNER && (
             <Link
               href={ROUTES.PERMISSION}
               className="flex items-center justify-between border-t border-slate-100 px-5 py-4 transition hover:bg-slate-50"
@@ -106,9 +107,6 @@ export default async function ProfilePage() {
           </form>
         </Card>
       </section>
-      <p className="mt-10 text-center text-xs text-slate-400">
-        Family Health Companion · v0.1
-      </p>
     </AppShell>
   );
 }

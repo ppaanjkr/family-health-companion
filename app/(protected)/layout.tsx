@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { auth, signOut } from "@/auth";
 
 import { USER_STATUS } from "@/constants/auth";
+
 import { getUserByLineUserId } from "@/services/user/user.service";
 
 export default async function ProtectedLayout({
@@ -21,13 +22,19 @@ export default async function ProtectedLayout({
   );
 
   if (!user) {
+    await signOut({
+      redirect: false,
+    });
+
     redirect("/login");
   }
 
   if (user.status !== USER_STATUS.ACTIVE) {
     await signOut({
-      redirectTo: "/login",
+      redirect: false,
     });
+
+    redirect("/login");
   }
 
   return children;

@@ -1,6 +1,13 @@
 import NextAuth from "next-auth";
+
 import authConfig, { authCallbacks } from "./auth.config";
-import { upsertLineUser } from "./services/user/user.service";
+
+import {
+  getUserByLineUserId,
+  upsertLineUser,
+} from "./services/user/user.service";
+
+import { USER_STATUS } from "@/constants/auth";
 
 export const {
   handlers,
@@ -9,8 +16,10 @@ export const {
   auth,
 } = NextAuth({
   ...authConfig,
+
   callbacks: {
     ...authCallbacks,
+
     async signIn({ user, account }) {
       if (account?.provider !== "line") {
         return false;
@@ -22,7 +31,15 @@ export const {
         pictureUrl: user.image ?? undefined,
       });
 
-      return true;
+      const dbUser = await getUserByLineUserId(
+        account.providerAccountId,
+      );
+
+      if (!dbUser) {
+        return false;
+      }
+
+      return dbUser.status === USER_STATUS.ACTIVE;
     },
   },
 });
