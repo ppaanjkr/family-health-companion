@@ -33,7 +33,7 @@ export default function RootLayout({
       lang="th"
       className={`${kanit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="">
         <AuthProvider>
           <ToastProvider>
             {children}

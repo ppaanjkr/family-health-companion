@@ -4,7 +4,7 @@ import { Button, Card } from "@/components/ui";
 
 export default function LoginPage() {
   return (
-    <main className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-10">
+    <main className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-10 h-screen">
       <Card  className="w-full max-w-md p-8 ring-1 ring-slate-200 sm:p-10">
         <p className="text-sm font-semibold tracking-wide text-emerald-600">
           4Ducks
