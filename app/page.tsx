@@ -46,15 +46,15 @@ export default async function Home({ searchParams }: HomeProps) {
           <h1 className="text-3xl font-bold">4Ducks</h1>
 
           <p className="text-center text-slate-500">
-            รอป่านปรับแล้วค่อยเข้าสู่ระบบใหม่อีกครั้ง
+            รอฉันรอไปก่อน
           </p>
 
-          <Link
+          {/* <Link
             href="/login"
             className="rounded-2xl border-[#06C755] bg-white text-[#06C755] hover:bg-[#e9f9ef] px-8 py-3 font-semibold"
           >
             เข้าสู่ระบบด้วย LINE
-          </Link>
+          </Link> */}
         </div>
       </AppShell>
     );
