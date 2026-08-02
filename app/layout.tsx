@@ -14,8 +14,8 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: "Family Health Companion",
-  description: "บันทึกและดูแลข้อมูลสุขภาพของคนในครอบครัว",
+  title: "4Ducks",
+  description: "duckduckduckduck",
 };
 
 export default function RootLayout({
