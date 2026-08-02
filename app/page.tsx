@@ -51,7 +51,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
           <Link
             href="/login"
-            className="rounded-2xl bg-sky-500 px-8 py-3 font-semibold text-white"
+            className="rounded-2xl border-[#06C755] bg-white text-[#06C755] hover:bg-[#e9f9ef] px-8 py-3 font-semibold"
           >
             เข้าสู่ระบบด้วย LINE
           </Link>
